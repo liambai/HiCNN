@@ -1,0 +1,75 @@
+
+HiCNN: a very deep convolutional neural network for resolution enhancement of Hi-C data
+
+requirements: 
+Python 3.6
+numpy >1.14
+pytorch >0.4.0
+
+-------------
+For training:
+-------------
+python HiCNN_training.py -h
+usage: HiCNN_training.py [-h] -f1 FILE -f2 FILE -f3 FILE -f4 FILE -d DIR -r N
+                         [--HiC-max N] [--batch-size N] [--epochs N] [--lr LR]
+                         [--momentum M] [--weight-decay M] [--clip M]
+                         [--no-cuda] [--seed S]
+
+HiCNN training process
+
+required arguments:
+  -f1 FILE, --file-training-data FILE
+                        file name of the training data, npy format and
+                        shape=n1*1*40*40
+  -f2 FILE, --file-training-target FILE
+                        file name of the training target, npy format and
+                        shape=n1*1*40*40
+  -f3 FILE, --file-validate-data FILE
+                        file name of the validation data, npy format and
+                        shape=n2*1*40*40
+  -f4 FILE, --file-validate-target FILE
+                        file name of the validation target, npy format and
+                        shape=n2*1*40*40
+  -d DIR, --dir-models DIR
+                        directory for saving models
+  -r N, --down-ratio N  down sampling ratio, 16 means 1/16 (default: 16)
+
+optional arguments:
+  --HiC-max N           the maximum value of Hi-C contacts (default: 100)
+  --batch-size N        input batch size for training (default: 256)
+  --epochs N            number of epochs to train (default: 500)
+  --lr LR               initial learning rate (default: 0.1)
+  --momentum M          SGD momentum (default: 0.5)
+  --weight-decay M      weight-decay (default: 1e-4)
+  --clip M              clip (default: 0.01)
+  --no-cuda             disables CUDA training
+  --seed S              random seed (default: 1)
+
+
+
+----------------
+For prediction:
+----------------
+python HiCNN_predict.py -h
+usage: HiCNN_predict.py [-h] -f1 FILE -f2 FILE -m FILE -r N [--no-cuda]
+                        [--HiC-max N] [--batch-size N]
+
+HiCNN predicting process
+
+required arguments:
+  -f1 FILE, --file-test-data FILE
+                        file name of the test data, npy format and
+                        shape=n1*1*40*40
+  -f2 FILE, --file-test-predicted FILE
+                        file name to save the predicted target, npy format and
+                        shape=n1*1*28*28
+  -m FILE, --file-best-model FILE
+                        file name of the best model
+  -r N, --down-ratio N  down sampling ratio, 16 means 1/16 (default: 16)
+
+optional arguments:
+  --no-cuda             disables CUDA predicting
+  --HiC-max N           the maximum value of Hi-C contacts (default: 100)
+  --batch-size N        input batch size for test (default: 256)
+
+
